@@ -2,17 +2,28 @@ import pandas as pd
 import pandera.pandas as pa
 from pandera import Check
 from pathlib import Path
+from utils import *
 
-current_dir = Path.cwd()
-path_to_data = current_dir.parent / 'data' / 'sleep_dataset.csv'
+@timer
+@logger
+def data_loader():
+    base = Path(__file__).resolve().parent.parent
+    path_to_data = base / 'data' / 'sleep_dataset.csv'
 
-df = pd.read_csv(path_to_data)
+    dataset = pd.read_csv(path_to_data)
+    return dataset
 
+df = data_loader()
+
+@timer
+@logger
 def data_preparation():
     df['date'] = pd.to_datetime(df['date'])
     df['bedtime'] = pd.to_datetime(df['bedtime'], format='%H:%M')
     df['wake_time'] = pd.to_datetime(df['wake_time'], format='%H:%M')
 
+@timer
+@logger
 def validate_df():
     schema = pa.DataFrameSchema({
         'date': pa.Column(str),
@@ -27,6 +38,8 @@ def validate_df():
     })
     return schema.validate(df)
 
+@timer
+@logger
 def post_preparation_validate():
     schema = pa.DataFrameSchema({
         'date': pa.Column(pa.DateTime),
@@ -44,7 +57,7 @@ except Exception as e:
     print("Нарушена структура данных", e)
 
 
-print(df)
+
 
 
 
