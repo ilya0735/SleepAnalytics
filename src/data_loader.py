@@ -36,10 +36,13 @@ def post_preparation_validate():
     return schema.validate(df)
 
 
+try:
+    validate_df()
+    data_preparation()
+    post_preparation_validate()
+except Exception as e:
+    print("Нарушена структура данных", e)
 
-validate_df()
-data_preparation()
-post_preparation_validate()
 
 print(df)
 
