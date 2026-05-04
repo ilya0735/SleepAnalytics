@@ -1,26 +1,38 @@
+from datetime import timedelta
 import pandas as pd
 import pandera.pandas as pa
 from pandera import Check
 from pathlib import Path
-from utils import *
+from src.utils import *
+
+normalize_dict = {
+
+}
 
 @timer
 @logger
 def data_loader():
     base = Path(__file__).resolve().parent.parent
-    path_to_data = base / 'data' / 'sleep_dataset.csv'
+    path_to_data = base / 'data' / 'night_owl_final_distorted.csv'
 
     dataset = pd.read_csv(path_to_data)
     return dataset
 
 df = data_loader()
 
+def normalize(bedtime):
+    if bedtime.hour < 16:
+        return timedelta(hours=bedtime.hour, minutes=bedtime.minute)
+    else:
+        return timedelta(days=-1, hours=bedtime.hour, minutes=bedtime.minute)
+
 @timer
 @logger
-def data_preparation():
+def data_formating():
     df['date'] = pd.to_datetime(df['date'])
     df['bedtime'] = pd.to_datetime(df['bedtime'], format='%H:%M')
     df['wake_time'] = pd.to_datetime(df['wake_time'], format='%H:%M')
+    df['bedtime'] = df['bedtime'].apply(normalize)
 
 @timer
 @logger
@@ -51,7 +63,7 @@ def post_preparation_validate():
 
 try:
     validate_df()
-    data_preparation()
+    data_formating()
     post_preparation_validate()
 except Exception as e:
     print("Нарушена структура данных", e)
