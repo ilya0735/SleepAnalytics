@@ -1,11 +1,15 @@
 import time
 from functools import wraps
 import logging
+from pathlib import Path
+
+base = Path(__file__).resolve().parent.parent
+path_to_log_data = base / 'logs' / 'logs.log'
 
 logging.basicConfig(
-    filename='logging_info.log',
+    filename=path_to_log_data,
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
 
 
@@ -30,7 +34,6 @@ def timer(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        print(f"Функция '{func.__name__}' выполнилась за {execution_time:.4f} секунд")
         logging.info(f'{func.__name__} worked {execution_time:.4f} seconds')
         return result
     return wrapper
