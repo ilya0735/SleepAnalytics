@@ -5,9 +5,6 @@ from pandera import Check
 from pathlib import Path
 from src.utils import *
 
-normalize_dict = {
-
-}
 
 @timer
 @logger
@@ -33,6 +30,10 @@ def data_formating():
     df['bedtime'] = pd.to_datetime(df['bedtime'], format='%H:%M')
     df['wake_time'] = pd.to_datetime(df['wake_time'], format='%H:%M')
     df['bedtime'] = df['bedtime'].apply(normalize)
+    day_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    df['day_of_week'] = pd.Categorical(df['day_of_week'], categories=day_order, ordered=True)
+    quality_order = ['very_poor', 'poor', 'average', 'good', 'excellent']
+    df['sleep_quality'] = pd.Categorical(df['sleep_quality'], categories=quality_order, ordered=True)
 
 @timer
 @logger
@@ -55,7 +56,7 @@ def validate_df():
 def post_preparation_validate():
     schema = pa.DataFrameSchema({
         'date': pa.Column(pa.DateTime),
-        'bedtime': pa.Column(pa.DateTime),
+        'bedtime': pa.Column(pa.Timedelta),
         'wake_time': pa.Column(pa.DateTime),
     })
     return schema.validate(df)
