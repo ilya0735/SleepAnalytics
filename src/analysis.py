@@ -63,10 +63,15 @@ def analytics_by_qualities():
 
     quality_dict = grouped_quality_df.to_dict()
 
-    categories = list(quality_dict.keys())
-    values = list(quality_dict.values())
+    max_counts = max(quality_dict.items(), key=lambda x: x[1])
+    min_counts = min(quality_dict.items(), key=lambda x: x[1])
 
-    plt.bar(categories, values)
+    print(max_counts, min_counts)
+
+    sleep_quality = list(quality_dict.keys())
+    count = list(quality_dict.values())
+
+    plt.bar(sleep_quality, count)
 
     plt.title('Распределение качества сна')
     plt.xlabel('Качество сна')
