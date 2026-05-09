@@ -2,8 +2,6 @@ import time
 from functools import wraps
 import logging
 
-
-
 logging.basicConfig(
     filename='logging_info.log',
     level=logging.INFO,
@@ -36,3 +34,24 @@ def timer(func):
         logging.info(f'{func.__name__} worked {execution_time:.4f} seconds')
         return result
     return wrapper
+
+
+def month_generator(df, month):
+    for i, ROW in df.iterrows():
+        if ROW['date'].month == month:
+            yield ROW
+
+def day_of_week_generator(df, day):
+    for i, ROW in df.iterrows():
+        if ROW['day_of_week'] == day:
+            yield ROW
+
+def sleep_quality_generator(df, quality):
+    for i, ROW in df.iterrows():
+        if ROW['sleep_quality'] == quality:
+            yield ROW
+
+
+
+
+
