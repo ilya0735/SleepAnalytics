@@ -74,12 +74,35 @@ class AnalyticsByMonth:
         return self.most_common_quality_by_month[
             self.most_common_quality_by_month['sleep_quality'] == np.min(self.most_common_quality_by_month['sleep_quality'])]
 
+    @staticmethod
+    def biggest_bedtime_deviation():
+        dif_df = abs(df.groupby('month').agg({'bedtime': 'mean'}) - df['bedtime'].mean())
+        return dif_df.nlargest(1, 'bedtime')
 
-    def biggest_deviation(self):
-        pass
+    @staticmethod
+    def biggest_wake_time_deviation():
+        dif_df = abs(df.groupby('month').agg({'wake_time': 'mean'}) - df['wake_time'].mean())
+        return dif_df.nlargest(1, 'wake_time')
 
-    def deviation_graph(self):
-        pass
+    @staticmethod
+    def deviation_bedtime_graph():
+        dif_df = abs(df.groupby('month').agg({'bedtime': 'mean'}) - df['bedtime'].mean())
+
+        plt.figure(figsize=(10, 5))
+        plt.plot(dif_df)
+        plt.title('Суммарное время сна')
+        plt.grid()
+        plt.show()
+
+    @staticmethod
+    def deviation_wake_time_graph():
+        dif_df = abs(df.groupby('month').agg({'wake_time': 'mean'}) - df['wake_time'].mean())
+
+        plt.figure(figsize=(10, 5))
+        plt.plot(dif_df)
+        plt.title('Суммарное время сна')
+        plt.grid()
+        plt.show()
 
     def bedtime_graph(self):
         plt.figure(figsize=(10, 5))
@@ -104,5 +127,5 @@ class AnalyticsByMonth:
 
 
 ABD = AnalyticsByMonth()
-print(ABD.max_row_sleep_quality())
-print(ABD.min_row_sleep_quality())
+ABD.deviation_bedtime_graph()
+print(ABD.biggest_bedtime_deviation())
