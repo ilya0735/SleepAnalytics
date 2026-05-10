@@ -125,7 +125,3 @@ class AnalyticsByMonth:
         plt.grid()
         plt.show()
 
-
-ABD = AnalyticsByMonth()
-ABD.deviation_bedtime_graph()
-print(ABD.biggest_bedtime_deviation())
