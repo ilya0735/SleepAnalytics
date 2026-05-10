@@ -3,6 +3,7 @@ from src.data_loader import df
 from src.utils import logger
 
 
+@logger
 class AnalyticsByQualities:
     def __init__(self):
         self.grouped_quality_df = df.groupby('sleep_quality')['date'].count()
@@ -33,14 +34,12 @@ class AnalyticsByQualities:
         except ValueError:
             return 'Такой последовательности нет'
 
-    @logger
     def good_period(self):
         sliced_df = df.loc[(df['sleep_quality'] == 'good')
                            | (df['sleep_quality'] == 'excellent')]
 
         return self.finding_the_period(sliced_df)
 
-    @logger
     def not_bad_period(self):
         sliced_df = df.loc[(df['sleep_quality'] == 'good')
                          | (df['sleep_quality'] == 'excellent')
@@ -48,7 +47,6 @@ class AnalyticsByQualities:
 
         return self.finding_the_period(sliced_df)
 
-    @logger
     def bad_period(self):
         sliced_df = df.loc[(df['sleep_quality'] == 'bad')
                            | (df['sleep_quality'] == 'very_bad')]
@@ -56,15 +54,10 @@ class AnalyticsByQualities:
         return self.finding_the_period(sliced_df)
 
 
-    @logger
     def max_quality_counts(self):
         return  max(self.quality_dict.items(), key=lambda x: x[1])
 
-    @logger
-    def max_quality_counts(self):
-        return min(self.quality_dict.items(), key=lambda x: x[1])
 
-    @logger
     def distribution_of_quality_graph(self):
         sleep_quality = list(self.quality_dict.keys())
         count = list(self.quality_dict.values())
@@ -76,7 +69,3 @@ class AnalyticsByQualities:
         plt.ylabel('Дни')
 
         plt.show()
-
-
-ABQ = AnalyticsByQualities()
-print(ABQ.bad_period())
