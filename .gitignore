@@ -130,6 +130,7 @@ pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,venv
 
+.idea
 temp.py
 logs/
 analysis(old).py
