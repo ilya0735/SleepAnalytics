@@ -18,9 +18,3 @@ for i in range(0, len(arr)-1):
 print(df.loc[(df['sleep_quality'] == 'good')
              | (df['sleep_quality'] == 'excellent')
              | (df['sleep_quality'] == 'average')])
-
-
-
-
-
-

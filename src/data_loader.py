@@ -8,7 +8,7 @@ from src.utils import *
 
 class DataLoader:
     def __init__(self):
-        self.__df = self.__data_loader()
+        self.__df = pd.DataFrame(self.__data_loader())
         self.__full_check()
 
     @timer
