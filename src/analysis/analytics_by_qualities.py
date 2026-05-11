@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 from src.data_loader import df
 from src.utils import logger
+import numpy as np
 
 
 @logger
@@ -13,12 +14,10 @@ class AnalyticsByQualities:
     @staticmethod
     def finding_the_period(sliced_df):
         try:
-            arr = []
-            for i in sliced_df.index:
-                arr.append(i)
-
+            arr = np.array(sliced_df.index)
+            
             arr_of_arr = []
-            arr_to_append = []
+            arr_to_append = np.array([])
             for i in range(0, len(arr) - 1):
                 if arr[i + 1] - 1 == arr[i]:
                     arr_to_append.append(arr[i])
@@ -69,3 +68,6 @@ class AnalyticsByQualities:
         plt.ylabel('Дни')
 
         plt.show()
+
+A = AnalyticsByQualities()
+print(A.good_period())
