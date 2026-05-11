@@ -3,7 +3,7 @@ from src.display import display_most_important
 from src.display import show_rows
 from src.data_loader import df
 from src.utils import row_generator
-
+from src.menu import SleepAnalyticsMenu
 
 
 def main():
@@ -13,7 +13,7 @@ def main():
 
     parser.add_argument(
         "command",
-        help="Команда для выполнения"
+        help="analysis, stream_rows, "
     )
 
     args = parser.parse_args()
@@ -22,6 +22,9 @@ def main():
         display_most_important()
     elif args.command == "stream_rows":
         show_rows(row_generator, df)
+    elif args.command == "menu":
+        GUI = SleepAnalyticsMenu()
+        GUI.main_menu()
     else:
         print(f"Неизвестная команда: {args.command}")
 
