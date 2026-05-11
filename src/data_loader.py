@@ -7,18 +7,23 @@ from src.utils import *
 
 
 class DataLoader:
-    def __init__(self):
+    def __init__(self, data_path=None):
+        self.__data_path = data_path
         self.__df = pd.DataFrame(self.__data_loader())
         self.__full_check()
 
     @timer
     @logger
     def __data_loader(self):
-        base = Path(__file__).resolve().parent.parent
-        path_to_data = base / 'data' / 'night_owl_final_distorted.csv'
+        if self.__data_path is None:
+            base = Path(__file__).resolve().parent.parent
+            path_to_data = base / 'data' / 'night_owl_final_distorted.csv'
+        else:
+            path_to_data = Path(self.__data_path)
 
         dataset = pd.read_csv(path_to_data)
         return dataset
+
 
     @staticmethod
     def __normalize(bedtime):
