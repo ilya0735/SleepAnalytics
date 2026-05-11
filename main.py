@@ -1,20 +1,30 @@
-import pandas as pd
+import argparse
+from src.display import display_most_important
+from src.display import show_rows
 from src.data_loader import df
+from src.utils import row_generator
 
-arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 21, 22, 23, 77]
 
-pd.set_option('display.max_rows', None)
 
-arr_of_arr = []
-arr_to_append = []
-for i in range(0, len(arr)-1):
-    if arr[i+1]-1 == arr[i]:
-        arr_to_append.append(arr[i])
+def main():
+    parser = argparse.ArgumentParser(
+        description="CLI для анализа сна"
+    )
+
+    parser.add_argument(
+        "command",
+        help="Команда для выполнения"
+    )
+
+    args = parser.parse_args()
+
+    if args.command == "analysis":
+        display_most_important()
+    elif args.command == "stream_rows":
+        show_rows(row_generator, df)
     else:
-        arr_of_arr.append(arr_to_append)
-        arr_to_append = []
+        print(f"Неизвестная команда: {args.command}")
 
 
-print(df.loc[(df['sleep_quality'] == 'good')
-             | (df['sleep_quality'] == 'excellent')
-             | (df['sleep_quality'] == 'average')])
+if __name__ == "__main__":
+    main()
