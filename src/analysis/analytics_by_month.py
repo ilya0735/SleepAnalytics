@@ -77,12 +77,12 @@ class AnalyticsByMonth:
     @staticmethod
     def biggest_bedtime_deviation():
         dif_df = abs(df.groupby('month').agg({'bedtime': 'mean'}) - df['bedtime'].mean())
-        return dif_df.nlargest(1, 'bedtime')
+        return dif_df.nlargest(1, 'bedtime').reset_index()
 
     @staticmethod
     def biggest_wake_time_deviation():
         dif_df = abs(df.groupby('month').agg({'wake_time': 'mean'}) - df['wake_time'].mean())
-        return dif_df.nlargest(1, 'wake_time')
+        return dif_df.nlargest(1, 'wake_time').reset_index()
 
     @staticmethod
     def deviation_bedtime_graph():
