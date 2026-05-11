@@ -38,6 +38,9 @@ def timer(func):
         return result
     return wrapper
 
+def row_generator(df):
+    for i, ROW in df.iterrows():
+        yield ROW
 
 def month_generator(df, month):
     for i, ROW in df.iterrows():
