@@ -49,8 +49,8 @@ class AnalyticsByDayOfWeek:
         return self.grouped_mean_day_of_week_df.nsmallest(2, 'total_sleep_hours')
 
     def min_row_sleep_quality(self):
-        return self.most_common_quality_by_day[
-            self.most_common_quality_by_day['sleep_quality'] == np.min(self.most_common_quality_by_day['sleep_quality'])]
+        return (self.most_common_quality_by_day[
+            self.most_common_quality_by_day['sleep_quality'] == np.min(self.most_common_quality_by_day['sleep_quality'])])
 
 
     def bedtime_graph(self):
