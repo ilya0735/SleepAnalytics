@@ -56,8 +56,3 @@ def sleep_quality_generator(df, quality):
     for i, ROW in df.iterrows():
         if ROW['sleep_quality'] == quality:
             yield ROW
-
-
-
-
-
