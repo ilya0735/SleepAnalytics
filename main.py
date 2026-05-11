@@ -13,7 +13,7 @@ def main():
 
     parser.add_argument(
         "command",
-        help="analysis, stream_rows, "
+        help="analysis, stream_rows, menu"
     )
 
     args = parser.parse_args()
